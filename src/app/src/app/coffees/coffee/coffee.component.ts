@@ -3,7 +3,7 @@ import { Coffee } from '../../model/coffee';
 import { Observable, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { selectAllCourses } from '../coffees.selectors';
+import { selectAllCoffees } from '../coffees.selectors';
 
 @Component({
   selector: 'app-coffee',
@@ -28,7 +28,7 @@ export class CoffeeComponent implements OnInit{
   }
 reload() {
   this.coffeeList$ = this.store.pipe(
-    select(selectAllCourses)
+    select(selectAllCoffees)
   );
 }
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { AppState } from '../reducers';
-import { Store } from '@ngrx/store';
-import { loadAllCoffees } from './coffee.actions';
-import { finalize, first, tap } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import {  allCoffeesLoaded, loadAllCoffees } from './coffee.actions';
+import { filter, finalize, first, tap } from 'rxjs';
+import { areCoffeesLoaded } from './coffees.selectors';
 
 @Injectable()
 export class CoffeeResolver implements Resolve<any>{
@@ -14,16 +15,19 @@ export class CoffeeResolver implements Resolve<any>{
 resolve(router:ActivatedRouteSnapshot, state:RouterStateSnapshot){
 
     return this.store.pipe(
-        tap(()=>{
-            if(!this.loading){
-                console.log('Dispatching loadAllCoffees action');
-                this.store.dispatch(loadAllCoffees())
+        select(areCoffeesLoaded),
+        tap((coffeesLoaded)=>{
+            if(!this.loading && !coffeesLoaded){
+                this.store.dispatch(loadAllCoffees());
+                this.loading=true;
             }
-        }),first(),
+        }),
+        filter(coffeesLoaded=>coffeesLoaded),
+        first(),
         finalize(()=>{
-            console.log('Resolver completed');
-            this.loading=true
+            this.loading=false
         })
     )
+
 }
 }

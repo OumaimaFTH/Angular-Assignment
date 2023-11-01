@@ -2,9 +2,14 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { CoffeeState } from "./reducers/coffee.reducers";
 
 import * as fromCoffees from "./reducers/coffee.reducers"
-export const selectCoursesState = createFeatureSelector<CoffeeState>("coffees");
+export const selectCoffeeState = createFeatureSelector<CoffeeState>("coffees");
 
-export const selectAllCourses = createSelector(
-    selectCoursesState,
+export const selectAllCoffees = createSelector(
+    selectCoffeeState,
     fromCoffees.selectAll
+)
+
+export const areCoffeesLoaded = createSelector(
+    selectCoffeeState,
+    state=>state.allCoffeesLoaded
 )

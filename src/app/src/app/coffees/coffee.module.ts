@@ -10,7 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoffeesEffects } from './coffees.effects';
 import { EffectsModule } from '@ngrx/effects';
 
-export const coursesRoutes: Routes = [
+export const coffeesRoutes: Routes = [
 
 {
   path: '',
@@ -28,7 +28,7 @@ export const coursesRoutes: Routes = [
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule.forChild(coursesRoutes),
+    RouterModule.forChild(coffeesRoutes),
     StoreModule.forFeature("coffees", coffeesReducer),
     EffectsModule.forFeature([CoffeesEffects]),
   ],
